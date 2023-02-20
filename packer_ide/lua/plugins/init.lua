@@ -1,5 +1,6 @@
 --init packer nvim plugin set up
 
+--check if the packer plugin file is install to nvim folder if not download from github
 local ensure_packer = function()
   local fn = vim.fn
   local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
@@ -13,10 +14,12 @@ end
 
 local packer_bootstrap = ensure_packer()
 
+require'plugins.keymaps' --init keymaps
+
 require('packer').startup({
   function(use)
     use 'wbthomason/packer.nvim'
-    use(require'plugins.nvim_web_devicons')
+    use(require'plugins.nvim_web_devicons')-- user config home folder /nvim/lua/plugins/nvim_web_devicons.lua
     use(require'plugins.gruvbox')
     use(require'plugins.lualine')
     use(require'plugins.which_key')
@@ -28,6 +31,8 @@ require('packer').startup({
     
     use(require'plugins.dashboard')
     use(require'plugins.autocomplete')
+    use(require'plugins.undotree')
+    use(require'plugins.barbar')
     
     if packer_bootstrap then
       require('packer').sync()

@@ -1,3 +1,5 @@
+-- https://github.com/ThePrimeagen/init.lua/blob/master/after/plugin/telescope.lua
+
 return {
   'nvim-telescope/telescope.nvim',
   disable = false,

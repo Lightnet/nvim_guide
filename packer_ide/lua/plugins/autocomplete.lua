@@ -2,16 +2,17 @@
 --command
 --lsp file
 
+-- https://github.com/neovim/nvim-lspconfig/wiki/Snippets
 return {
   'hrsh7th/nvim-cmp',
   disable = false,
   requires = {
     'quangnguyen30192/cmp-nvim-ultisnips',
-    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-nvim-lsp', -- LSP source for nvim-cmp
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-cmdline',
-    'L3MON4D3/LuaSnip',
+    'L3MON4D3/LuaSnip', -- Snippets source for nvim-cmp
     'hrsh7th/vim-vsnip',
   },
   config = function()

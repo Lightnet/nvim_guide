@@ -1,46 +1,60 @@
--- this is for LSP language server protocol
---example vscode or IDE editor that use program language to auto check for error.
+--[[
+https://github.com/williamboman/mason.nvim
+https://github.com/williamboman/mason-lspconfig.nvim
+https://github.com/williamboman/mason.nvim/discussions/606
+
+https://github.com/williamboman/mason.nvim#how-to-use-installed-packages
+https://github.com/neovim/nvim-lspconfig
+https://vonheikemen.github.io/devlog/tools/setup-nvim-lspconfig-plus-nvim-cmp/
+--]]
+-- https://www.youtube.com/watch?v=Mccy6wuq3JE&t=1018s
+
+--- 
 
 return {
-  'williamboman/mason.nvim',
-  requires = { 
+  "williamboman/mason.nvim",
+  enabled = true,
+  dependencies = {
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
-    'hrsh7th/cmp-nvim-lsp',
-    --'hrsh7th/nvim-cmp',
+    --"jose-elias-alvarez/null-ls.nvim",
+    --'mfussenegger/nvim-dap', --DAP (Debug Adapter Protocol)
+    "nvim-telescope/telescope.nvim",
   },
-  disable = false,
+  keys={
+    --{'<leader>rn', '<cmd>lua vim.lsp.buf.rename<cr>', desc = "Rename"},
+    --{'<leader>ca', '<cmd>lua vim.lsp.buf.code_action<cr>', desc = "code_actionr"},
+
+    --{'gd', '<cmd>lua vim.lsp.buf.definition<cr>', desc = "definition"},
+    --{'gi', '<cmd>lua vim.lsp.buf.implementation<cr>', desc = "implementation"},
+    --{'gr', "<cmd>lua require('telescope.builtin').lsp_references<cr>", desc = "lsp_references"},
+    --{'gr', "<cmd>lua vim.lsp.buf.references()<CR>", desc = "references"},
+    --{'K', '<cmd>lua vim.lsp.buf.hover', desc = "hover"},
+  },
   config = function()
+    --does not load here
+  end,
+  init=function()
+    --vim.keymap.set('n','<leader>rt','<cmd>lua print("test")<cr>', {})
+    --vim.keymap.set('n','<leader>rl','<cmd>lua print("TESTSSS")<cr>', {})--works
+    --require('notify')('Hellolll')
+
     require("mason").setup({
-      ui = {
-        icons = {
-          package_installed = "✓",
-          package_pending = "➜",
-          package_uninstalled = "✗"
-        }
-      }
+      --providers = {
+        --"mason.providers.client",
+        --"mason.providers.registry-api",
+      --},
+      --log_level = vim.log.levels.DEBUG,
     })
-    
+
     require("mason-lspconfig").setup({
-      ensure_installed = { "lua_ls", "rust_analyzer" },
+      --ensure_installed = { "lua_ls", "rust_analyzer" },
     })
 
-    --vim.lsp.set_log_level("debug")
-
-    -- https://github.com/neovim/nvim-lspconfig
-    local lsp_flags = {
-      -- This is the default in Nvim 0.7+
-      debounce_text_changes = 150,
-    }
-    -- https://www.youtube.com/watch?v=w7i4amO_zaE&t=1153s
-    -- https://github.com/neovim/nvim-lspconfig/blob/master/test/minimal_init.lua
-    -- https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig.lua
-    -- https://github.com/ThePrimeagen/init.lua/blob/master/after/plugin/lsp.lua
-    -- https://blog.codeminer42.com/configuring-language-server-protocol-in-neovim/
     local on_attach = function(client, bufnr)
-      --local opts = {buffer = bufnr, remap = false}
-      --local opts = { buffer = bufnr, noremap = true, silent = true }
+
       local opts = { noremap=true, silent=true, buffer=bufnr }
+
       vim.keymap.set('n','<leader>rn',vim.lsp.buf.rename, opts)
       vim.keymap.set('n','<leader>ca',vim.lsp.buf.code_action, opts)
 
@@ -51,15 +65,12 @@ return {
       vim.keymap.set('n','K',vim.lsp.buf.hover, opts)
     end
 
+    --vim.keymap.set('n','<leader>rt','<cmd>lua print("test")<cr>', {})
+
     -- Set up lspconfig.
-    local capabilities = require('cmp_nvim_lsp').default_capabilities()
-    -- https://github.com/LuaLS/lua-language-server/wiki/Configuration-File
-    -- https://jdhao.github.io/2021/08/12/nvim_sumneko_lua_conf/
+    --local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-    --require'lspconfig'.sumneko_lua.setup{ -- lua deprecated
-
-    -- https://github.com/jdhao/nvim-config/blob/master/lua/config/lsp.lua
-    --local fn = vim.fn
+    -- Lua
     -- sumneko_lua -> lua_ls
     require'lspconfig'.lua_ls.setup({ -- lua
       capabilities = capabilities,
@@ -92,20 +103,11 @@ return {
         },
       },
     })
-    
 
-    --[[
-    require'lspconfig'.luau_lsp.setup{ -- lua
-      capabilities = capabilities,
-      on_attach = on_attach,
-      flags = lsp_flags,
-    }
-    ]]
-    
+    -- Rust
     require("lspconfig").rust_analyzer.setup {
       capabilities = capabilities,
       on_attach = on_attach,
-      flags = lsp_flags,
       --cmd = {
         --"rustup", "run", "stable", "rust-analyzer"
       --}

@@ -3,6 +3,7 @@
 
 return {
   'nvim-tree/nvim-tree.lua',
+  enabled = true,
   --event = 'VimEnter',
   dependencies={
     "rcarriga/nvim-notify",
@@ -52,6 +53,10 @@ return {
       },
     })
     ]]
+
+  end,
+  init=function()
+    require("nvim-tree.api").tree.open()
 
   end
 }

@@ -1,14 +1,9 @@
--- https://github.com/romgrk/barbar.nvim
--- https://github.com/romgrk/barbar.nvim/issues/353
-
--- bufferline.nvim\lua\bufferline\config.lua
-
 return {
-  'romgrk/barbar.nvim',
-  enabled = true,
-  dependencies = {
+  'romgrk/barbar.nvim', --github > user/repo
+  disable = false,
+  requires = { 
     "nvim-tree/nvim-web-devicons",
-    {"akinsho/bufferline.nvim", version = "1.4.1"},
+    "akinsho/bufferline.nvim"
   },
   config = function()
     local map = vim.api.nvim_set_keymap
@@ -110,36 +105,5 @@ return {
         },
       }
     )
-    
-
-
-    --[[
-    require('bufferline').setup({
-      options={
-        animation = true,
-        tabpages = true,
-        closable = true,
-        clickable = true,
-        highlight_alternate = false,
-        hide = {extensions = false, inactive = false},
-        icons = true,
-
-        highlight_inactive_file_icons = false,
-        highlight_visible = true,
-
-
-        icon_custom_colors = false,
-        icon_separator_active = '( ',
-        icon_separator_inactive = '( ',
-        icon_close_tab = 'x',
-        icon_close_tab_modified = '●',
-        icon_pinned = 'T',
-        semantic_letters = true,
-        letters = 'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERUTYQP',
-      },
-      --icon_close_tab = 'x',
-      --no_name_title = nil,
-    })
-    --]]
   end
 }

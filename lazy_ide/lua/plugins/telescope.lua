@@ -1,6 +1,6 @@
 return {
   "nvim-telescope/telescope.nvim",
-  version = "0.1.1",
+  --version = "0.1.1",
   keys = {
     {"<leader>ff", "<cmd>Telescope find_files<cr>", desc = "find files"}, --mode normal "\ff" = "<leader>ff" == :Telescope find_files
     {"<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "live grep"},
