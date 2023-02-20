@@ -9,50 +9,27 @@ return {
     "rcarriga/nvim-notify",
   },
   keys={
-    {'<c-n>','<cmd>:NvimTreeToggle<cr>', desc = "NvimTreeToggle"}
+    --{'<c-n>','<cmd>:NvimTreeToggle<cr>', desc = "NvimTreeToggle"}
   },
   config=function()
     -- empty setup using defaults
-    require("nvim-tree").setup({})
-
-    local function open_nvim_tree()
-      -- open the tree
-      require("nvim-tree.api").tree.open()
-      --require('nvim-tree').toggle()
-      print("Hello")
-      --require('notify')('Hello')
-    end
-    --require('notify')('Hellosss')
-
-    --vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
-    --vim.api.nvim_create_autocmd({ "LazyVimStarted" }, { callback = open_nvim_tree })
-
-
-
-    --require('nvim-tree').toggle()
-    --[[
     require("nvim-tree").setup({
-      sort_by = "case_sensitive",
-      view = {
-        width = 30,
-        mappings = {
-          list = {
-            { key = "u", action = "dir_up" },
-          },
-        },
-      },
-      renderer = {
-        group_empty = true,
-      },
-      filters = {
-        dotfiles = true,
-      },
-      update_focused_file = {
-        enable = true,
-        update_cwd = false,
-      },
+      hijack_cursor = false,
+      on_attach = function(bufnr)
+        local bufmap = function(lhs, rhs, desc)
+          vim.keymap.set('n', lhs, rhs, {buffer = bufnr, desc = desc})
+        end
+
+        -- See :help nvim-tree.api
+        local api = require('nvim-tree.api')
+      
+        bufmap('L', api.node.open.edit, 'Expand folder or go to file')
+        bufmap('H', api.node.navigate.parent_close, 'Close parent folder')
+        bufmap('gh', api.tree.toggle_hidden_filter, 'Toggle hidden files')
+      end
     })
-    ]]
+
+    vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<cr>')
 
   end,
   init=function()

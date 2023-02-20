@@ -103,3 +103,4 @@ gh is for github to download file packages
  
 # Credits:
  * youtube neovim team tutorial 
+ * https://neovimcraft.com/
