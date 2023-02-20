@@ -3,21 +3,29 @@
   Work in progress.
   
   Building the IDE ( integrated development environment ) is not easy. As long you read the docs.
+
+  There is already premade IDE for neovim. 
+  
+## Links:
+ * https://www.lunarvim.org/
+ * https://github.com/nvim-lua/kickstart.nvim
+  
+  There are better or method ways to improve the scripts and configs.
   
   There will be a lot of change due to users improving the plugins and binaries.
   
-  One is the LSP (Language Server Protocol) for handle many things behind things. Example VSCode ext for programing language required to analyze the code.
+  Neovim does not have IDE just normal text editor terminal. So plugin was development for IDE. The LSP (Language Server Protocol) for handle many things behind the background running and checking the codes. Example VSCode ext for programing language required to analyze the code.
   
-  Build two type of plugin managers.
+  There are two type of plugin managers. As well more plugins manager. That take time to test them.
 
-  Program lanuage that use is lua, rust and vim. They are easy to set up as there helper plugins.
+  Program language that use is lua, rust and vim. They are easy to set up as there helper plugins.
 
   Note that user dir (directory folder path) for nvim can have one init file for start up. It will conflict the builds. Will be using lua file to create plugin. Since those plugin support lua script.
  
 # Inputs and KeyMaps:
- Note that user will required some keybaord shortcute keys as it different from normal like vscode.
+ Note that user will required some keybaord shortcute keys as it different from normal like VSCode.
  
- Reason is that it run all in terminal. So the mouse is disable. So you need to navigation in right manner in keyboard ways.
+ Reason is that it run all in terminal. So the mouse is disable that can be enable. So you need to navigation in right manner in keyboard ways.
 
 # Package Manager List:
  * folke/lazy.nvim (github)
