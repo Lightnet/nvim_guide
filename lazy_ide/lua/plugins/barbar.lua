@@ -2,15 +2,19 @@
 -- https://github.com/romgrk/barbar.nvim/issues/353
 
 -- bufferline.nvim\lua\bufferline\config.lua
+-- tab with icons
 
 return {
   'romgrk/barbar.nvim',
-  enabled = true,
+  enabled = false,
   dependencies = {
     "nvim-tree/nvim-web-devicons",
-    {"akinsho/bufferline.nvim", version = "1.4.1"},
+    {
+      "akinsho/bufferline.nvim",
+      --version = "1.4.1"
+    },
   },
-  config = function()
+  init = function()
     local map = vim.api.nvim_set_keymap
     local opts = { noremap = true, silent = true }
 
@@ -54,6 +58,8 @@ return {
     -- Other:
     -- :BarbarEnable - enables barbar (enabled by default)
     -- :BarbarDisable - very bad command, should never be used
+
+    -- https://github.com/romgrk/barbar.nvim
     require('bufferline').setup({
       options = {
         animation = true,
@@ -61,85 +67,47 @@ return {
         tabpages = true,
         closable = true,
         clickable = true,
+        diagnostics = false,
         hide = {extensions = false, inactive = false},
         highlight_alternate = false,
         highlight_visible = true,
-        indicator = {
-          style = "icon",
-          icon = "|+"
-        },
-        highlight_alternate = false,
-        highlight_visible = true,
+        --indicator = {
+          --style = "icon",
+          --icon = "|+"
+        --},
         icons = true,
         icon_custom_colors = false,
 
-        modified_icon = "●",
-        buffer_close_icon = "x",
-        --close_command = "Bdelete %d",
-        close_icon = "x",
-        left_trunc_marker = "(",
-        --right_mouse_command = "Bdelete! %d",
-        right_trunc_marker = ")",
+        -- Configure icons on the bufferline.
         icon_separator_active = '<',
         icon_separator_inactive = '<',
-        show_close_icon = false,
-        show_tab_indicators = true,
-        --numbers = "ordinal",
-        offsets = { { filetype = "NvimTree", text = "EXPLORER", text_align = "center" } },
+        icon_close_tab = '',
+        icon_close_tab_modified = '●',
+        icon_pinned = '車',
 
-        --insert_at_end = false,
-        --insert_at_start = false,
-        --maximum_padding = 1,
-        --minimum_padding = 1,
+        insert_at_end = false,
+        insert_at_start = false,
+
+        maximum_padding = 1,
+        minimum_padding = 1,
         maximum_length = 30,
-        --semantic_letters = true,
+        
+        semantic_letters = true,
+        --numbers = "ordinal",
+        letters = 'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERUTYQP',
+        offsets = { { filetype = "NvimTree", text = "EXPLORER", text_align = "center", padding = 1 } },
         no_name_title = nil,
-
-        --max_name_length = 15,
-        --max_prefix_length = 6,
-        --diagnostics = "nvim_lsp",
-        --show_buffer_icons = true,
-        --show_buffer_close_icons = false,
-        --show_close_icon = false,
-        --persist_buffer_sort = true,
-        --enforce_regular_tabs = true,
-        --diagnostics_indicator = function(count, level)
-          --local icon = level:match("error") and "" or ""
-          --return icon .. count
-        --end,
         },
       }
     )
-    
 
-
-    --[[
-    require('bufferline').setup({
-      options={
-        animation = true,
-        tabpages = true,
-        closable = true,
-        clickable = true,
-        highlight_alternate = false,
-        hide = {extensions = false, inactive = false},
-        icons = true,
-
-        highlight_inactive_file_icons = false,
-        highlight_visible = true,
-
-
-        icon_custom_colors = false,
-        icon_separator_active = '( ',
-        icon_separator_inactive = '( ',
-        icon_close_tab = 'x',
-        icon_close_tab_modified = '●',
-        icon_pinned = 'T',
-        semantic_letters = true,
-        letters = 'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERUTYQP',
-      },
-      --icon_close_tab = 'x',
-      --no_name_title = nil,
+    vim.api.nvim_create_autocmd({'BufWinLeave', 'BufWipeout'}, {
+      callback = function(tbl)
+        if vim.bo[tbl.buf].filetype == 'NvimTree' then
+          require'bufferline.api'.set_offset(0)
+        end
+      end
     })
-    --]]
+
   end
 }

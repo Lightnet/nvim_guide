@@ -1,4 +1,4 @@
-
+-- https://medium.com/linux-with-michael/lazy-nvim-the-blazingly-fast-neovim-package-manager-19a7a952835c
 -- https://github.com/folke/lazy.nvim
 -- set up lazy plugins
 
@@ -17,26 +17,36 @@ vim.opt.rtp:prepend(lazypath)
 
 -- example using a list of specs with the default options
 -- vim.g.mapleader = " " -- make sure to set `mapleader` before lazy so your mappings are correct
+require("config.settings")
 require("config.keymaps")
-require("lazy").setup('plugins', {
-  --defaults = { lazy = true },
-  --install = { colorscheme = { "tokyonight" } },
-  checker = { enabled = true },
+
+local opts = { 
+--  defaults = { lazy = true },
+--  install = { colorscheme = { "tokyonight" } },
+  checker = { 
+    enabled = true 
+  },
   change_detection = {
-   notify = true,
+    enabled = true,
+    notify = true,
   },
   performance = {
-   rtp = {
+  rtp = {
     disabled_plugins = {
-     "gzip",
-     "matchit",
-     "matchparen",
-     "netrwPlugin",
-     "tarPlugin",
-     "tohtml",
-     "tutor",
-     "zipPlugin",
+    "gzip",
+    "matchit",
+    "matchparen",
+    "netrwPlugin",
+    "tarPlugin",
+    "tohtml",
+    "tutor",
+    "zipPlugin",
     },
-   },
   },
- }) -- lua/plugins/int.lua
+  },
+}
+
+require("lazy").setup(
+  'plugins',  --folder nvim/lua/plugins looks for file with .lua to load them.
+  opts
+) -- lua/plugins/int.lua

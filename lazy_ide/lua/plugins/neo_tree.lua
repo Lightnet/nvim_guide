@@ -4,7 +4,7 @@ return {
   "nvim-neo-tree/neo-tree.nvim",
   enabled = false, --disable plugin
   cmd = "Neotree",
-  branch = "v2.x",
+  branch = "v3.x",
   keys = {
     --{"<Leader>ft", "<cmd>Neotree toggle<cr>", desc = "NeoTree"},
     {"<c-n>", "<cmd>Neotree toggle<cr>", desc = "NeoTree"},
